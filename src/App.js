@@ -13,20 +13,19 @@ import Clock from './Clock';
 function App() {
 
   const [activities, setActivities] = useState("");
-  const [newActivity, setNewActivity] = useState([]);
 
   useEffect(() => {
+    getActivity();
+  }, [])
+    
     const getActivity = async() => {
       const response = await fetch(`https://www.boredapi.com/api/activity/`);
       const data = await response.json();
       setActivities(data.activity);
     }
-    getActivity();
-  },[newActivity])
+    
 
-  const changeActivity = () => {
-    setNewActivity(activities);
-  }
+ 
 
   return (
     <DeviceFrameset device='iPad Mini' color="silver" landscape>
@@ -46,7 +45,7 @@ function App() {
       <div className="phone-frame">
         <h1>Find activity for you</h1>
         <p className='activity'>{activities}</p>
-        <button onClick={changeActivity}>
+        <button onClick={getActivity}>
           <img src={button} className='icon' alt='button'/>
         </button>
       </div>
